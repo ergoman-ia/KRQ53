@@ -29,6 +29,8 @@
             flex-wrap: wrap; /* 공간 부족 시 줄 바꿈 허용 */
             width: 100%; /* 전체 너비 차지 */
             max-width: 700px; /* 컨테이너와 동일한 최대 너비 */
+            margin-left: auto;  /* 화면 가운데 정렬 */
+            margin-right: auto; /* 화면 가운데 정렬 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 은은한 그림자 효과 */
             gap: 20px; /* 타이틀과 척도 사이 간격 */
         }
@@ -38,10 +40,13 @@
             padding: 0 10px; /* 내용이 테두리에 너무 붙지 않도록 패딩 추가 */
         }
         .header-title-only h1 {
-            font-size: 2.2em; /* 제목 글씨 크기 키움 */
+            /* 화면(스마트폰) 폭에 비례해 글자 크기 자동 조절: 최소 1.25rem ~ 최대 2.2rem */
+            font-size: 1.8rem; /* clamp 미지원 환경 대비 기본값 */
+            font-size: clamp(1.25rem, 5.5vw, 2.2rem);
             color: #333;
             margin: 0; /* 기본 마진 제거 */
-            white-space: nowrap; /* 제목이 줄 바꿈되지 않도록 */
+            white-space: normal; /* 아주 좁은 화면에서는 줄 바꿈 허용 */
+            line-height: 1.2;
         }
         .intro-paragraph {
             text-align: center;
@@ -126,7 +131,7 @@
             max-width: 700px;
             width: 100%;
             box-sizing: border-box;
-            margin-top: 20px; /* 고정 헤더와 본문 사이 여백 */
+            margin: 20px auto 0; /* 고정 헤더와 본문 사이 여백 + 화면 가운데 정렬 */
         }
         .category-title {
             font-size: 1.5em;
@@ -315,9 +320,6 @@
                 width: 100%;
                 text-align: center; /* 모바일 제목 중앙 정렬 */
                 margin-bottom: 0; /* 모바일에서 마진 제거 */
-            }
-            .header-title-only h1 {
-                font-size: 1.8em; /* 모바일 제목 크기 조정 */
             }
             .score-legend {
                 width: 100%;
