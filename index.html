@@ -218,6 +218,33 @@
         .submit-button:hover {
             background-color: #0056b3;
         }
+        /* 점수계산 + 랜덤 입력 버튼을 같은 행에 배치 */
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            align-items: stretch;
+        }
+        .button-row .submit-button {
+            flex: 1 1 auto; /* 점수계산 버튼이 남는 공간을 모두 차지 */
+            width: auto;
+            margin-top: 0; /* 마진은 button-row가 담당 */
+        }
+        .random-button {
+            display: block;
+            flex: 0 0 auto; /* 랜덤 입력 버튼은 내용 크기만큼만 */
+            padding: 12px 15px;
+            background-color: #6c757d; /* 보조 버튼은 회색 계열 */
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .random-button:hover {
+            background-color: #565e64;
+        }
         .results-display {
             margin-top: 30px;
             padding: 8px; /* 패딩을 더 좁힘 */
@@ -371,6 +398,13 @@
             .option-item .option-value {
                 margin-right: 0;
                 font-size: 0.9em; /* 좁은 화면에서 점수 글자 크기 조정 */
+            }
+            /* 랜덤 입력 버튼은 데스크탑에서만 활성화 → 모바일에서는 숨김 */
+            .random-button {
+                display: none;
+            }
+            .button-row .submit-button {
+                width: 100%; /* 모바일에서는 점수계산 버튼이 전체 너비 차지 */
             }
             .results-display {
                 padding: 4px; /* 모바일 패딩 더 좁게 */
@@ -1560,7 +1594,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="submit-button">점수계산</button>
+            <div class="button-row">
+                <button type="button" id="random-fill-button" class="random-button">랜덤 입력</button>
+                <button type="submit" class="submit-button">점수계산</button>
+            </div>
         </form>
 
         <!-- 결과 표시를 위한 div 추가 -->
@@ -1657,6 +1694,35 @@
 
             // 페이지 로드 시 초기 가시성 설정
             updateQuestionVisibility();
+
+            // "랜덤 입력" 버튼: 53개 전체 문항에 1~5점을 랜덤으로 입력 (데스크탑 전용)
+            const randomFillButton = document.getElementById('random-fill-button');
+            if (randomFillButton) {
+                randomFillButton.addEventListener('click', function() {
+                    // 모바일에서는 버튼이 숨겨져 있지만, 안전장치로 한 번 더 차단
+                    if (window.matchMedia('(max-width: 600px)').matches) {
+                        return;
+                    }
+                    const form = document.getElementById('krq-survey-form');
+                    // 모든 라디오 그룹 이름(q1~q53)을 수집
+                    const groupNames = new Set();
+                    form.querySelectorAll('input[type="radio"]').forEach(radio => {
+                        groupNames.add(radio.name);
+                    });
+                    // 각 문항에 1~5 사이의 랜덤 점수 부여
+                    groupNames.forEach(name => {
+                        const value = Math.floor(Math.random() * 5) + 1; // 1~5
+                        const target = form.querySelector(
+                            'input[name="' + name + '"][value="' + value + '"]'
+                        );
+                        if (target) {
+                            target.checked = true;
+                            // 섹션 색상 등 기존 로직 갱신을 위해 change 이벤트 발생
+                            target.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                });
+            }
 
 
             document.getElementById('krq-survey-form').addEventListener('submit', function(event) {
