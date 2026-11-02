@@ -1872,6 +1872,13 @@
             // 페이지 로드 시 초기 가시성 설정
             updateQuestionVisibility();
 
+            // 새로고침·뒤로 가기 시 브라우저가 이전 스크롤 위치를 복원하지 않도록 → 항상 제목(맨 위)부터 보이게
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
+            window.addEventListener('pageshow', () => window.scrollTo(0, 0));
+
             // 헤더의 척도 5칸을 문항 보기(1~5점) 5칸과 가로 위치가 같도록 맞춤
             function alignLegendToOptions() {
                 const legend = document.getElementById('score-legend');
