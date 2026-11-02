@@ -622,7 +622,7 @@
                 <span class="start-option-desc">자아낙관성 · 생활만족도 · 감사하기</span>
             </button>
         </div>
-        <p class="start-note">설문을 시작한 뒤에도 화면 상단의 '영역 변경' 버튼으로 이 화면에 돌아올 수 있습니다. (돌아오면 입력한 답은 초기화됩니다.)</p>
+        <p class="start-note">설문을 시작한 뒤에도 화면 상단의 '설문 재선택' 버튼으로 이 화면에 돌아올 수 있습니다. (돌아오면 입력한 답은 초기화됩니다.)</p>
     </div>
 
     <div class="main-sticky-header is-hidden">
@@ -638,7 +638,7 @@
             <span class="current-category">선택 영역: <strong id="current-category-label">전체 설문(53문항)</strong></span>
             <span class="header-buttons">
                 <button type="button" id="random-fill-button" class="random-button">랜덤 입력</button>
-                <button type="button" id="change-category-button" class="change-category-button">영역 변경</button>
+                <button type="button" id="change-category-button" class="change-category-button">설문 재선택</button>
             </span>
         </div>
 
@@ -1919,7 +1919,7 @@
                 });
             });
 
-            // "영역 변경": 설문 화면을 닫고 시작 화면으로 (답변·결과 초기화)
+            // "설문 재선택": 설문 화면을 닫고 시작 화면으로 (답변·결과 초기화)
             document.getElementById('change-category-button').addEventListener('click', function() {
                 const form = document.getElementById('krq-survey-form');
                 form.reset();
