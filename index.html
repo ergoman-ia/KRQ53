@@ -513,7 +513,7 @@
             }
             .current-category { font-size: 0.82em; }
             .change-category-button { font-size: 0.8em; padding: 5px 10px; }
-            .random-button { font-size: 0.8em; padding: 5px 10px; }
+            .random-button { display: none; } /* 스마트폰(600px 이하)에서는 랜덤 입력 숨김, 데스크톱에서만 표시 */
             .container {
                 padding: 15px;
             }
@@ -1939,6 +1939,7 @@
             const randomFillButton = document.getElementById('random-fill-button');
             if (randomFillButton) {
                 randomFillButton.addEventListener('click', function() {
+                    if (window.matchMedia('(max-width: 600px)').matches) return; // 스마트폰에서는 동작하지 않음
                     const form = document.getElementById('krq-survey-form');
                     // 모든 라디오 그룹 이름(q1~q53)을 수집
                     const groupNames = new Set();
