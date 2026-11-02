@@ -24,6 +24,77 @@
             margin-left: auto;
             margin-right: auto;
         }
+        /* ===== 시작(영역 선택) 화면 ===== */
+        .start-screen {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .start-screen h1 {
+            font-size: 1.5em;
+            margin: 0 0 8px;
+            word-break: keep-all; /* 단어 중간에서 끊기지 않도록 */
+        }
+        @media (max-width: 600px) {
+            .start-screen { padding: 18px 12px 28px; }
+            .start-screen h1 { font-size: 1.25em; }
+            .start-screen .start-desc { font-size: 0.9em; word-break: keep-all; }
+        }
+        .start-screen .start-desc {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin: 0 0 20px;
+        }
+        .start-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .start-option {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            padding: 14px 16px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            font-family: inherit;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .start-option:hover { border-color: #007bff; background-color: #eef5ff; }
+        .start-option .start-option-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        .start-option .start-option-count {
+            font-size: 0.85em;
+            color: #fd7e14;
+            font-weight: bold;
+            margin-left: 6px;
+        }
+        .start-option .start-option-desc {
+            font-size: 0.88em;
+            color: #555;
+            line-height: 1.4;
+            margin-top: 4px;
+        }
+        .start-option.start-option-all { border-color: #007bff; background-color: #e7f1ff; }
+        .start-note {
+            margin-top: 16px;
+            font-size: 0.82em;
+            color: #888;
+            line-height: 1.4;
+        }
+        .is-hidden { display: none !important; }
         .main-sticky-header {
             position: sticky; /* 스크롤 시 상단에 고정 */
             top: 0; /* 상단에 붙임 */
@@ -104,25 +175,41 @@
             width: 100%;
             max-width: 700px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #f8f8f8;
-            border-bottom: 1px solid #eee;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-top: 0;
+            padding: 6px 0 0;
+            background-color: transparent;
+            border-top: 1px solid #eee;
             box-sizing: border-box;
         }
-        .category-button {
-            padding: 8px 15px;
-            border: 1px solid #ccc;
+        .category-button,
+        .random-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            padding: 6px 2px;
+            min-width: 0;
             border-radius: 5px;
-            background-color: #e9e9e9;
             cursor: pointer;
             font-size: 0.9em;
-            color: #333;
+            font-weight: bold;
             transition: background-color 0.2s, border-color 0.2s;
             white-space: nowrap;
+        }
+        .category-button small,
+        .random-button small {
+            font-size: 0.72em;
+            font-weight: normal;
+            opacity: 0.85;
+        }
+        .category-button {
+            border: 1px solid #ccc;
+            background-color: #e9e9e9;
+            color: #333;
         }
         .category-button.active {
             background-color: #007bff;
@@ -238,20 +325,37 @@
             width: auto;
             margin-top: 0; /* 마진은 button-row가 담당 */
         }
-        .random-button {
-            display: block;
-            flex: 0 0 auto; /* 랜덤 입력 버튼은 내용 크기만큼만 */
-            padding: 12px 15px;
-            background-color: #6c757d; /* 보조 버튼은 회색 계열 */
-            color: #ffffff;
-            font-size: 1em;
+        .current-category {
+            font-size: 0.9em;
+            color: #333;
+        }
+        .current-category strong { color: #0056b3; }
+        .change-category-button {
+            padding: 6px 12px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #007bff;
+            font-size: 0.85em;
             font-weight: bold;
-            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .change-category-button:hover { background-color: #eef5ff; }
+        .header-buttons { display: flex; gap: 6px; flex: 0 0 auto; }
+        .random-button {
+            padding: 6px 12px;
+            border-radius: 5px;
+            background-color: #fd7e14; /* 랜덤 입력은 주황색으로 구분 */
+            color: #ffffff;
+            border: 1px solid #fd7e14;
+            font-size: 0.85em;
+            font-weight: bold;
             cursor: pointer;
             white-space: nowrap;
         }
         .random-button:hover {
-            background-color: #565e64;
+            background-color: #e8590c;
         }
         .results-display {
             margin-top: 30px;
@@ -260,8 +364,8 @@
             background-color: #e0f7fa; /* 옅은 파란색 배경 */
             color: #004d40;
             font-size: 1.05em; /* 폰트 크기를 약간 줄여 더 밀집되게 */
-            line-height: 0.9; /* 줄간격을 획기적으로 줄임 */
-            white-space: pre-wrap; /* 줄바꿈 유지 */
+            line-height: 1.3;
+            white-space: normal; /* pre-wrap이면 템플릿 들여쓰기가 빈 줄로 보임 */
             max-width: 700px;
             width: 100%;
             box-sizing: border-box;
@@ -348,8 +452,12 @@
             .main-sticky-header {
                 flex-direction: column; /* 모바일에서는 세로로 쌓이도록 */
                 align-items: center; /* 모바일에서 가운데 정렬 */
-                padding: 10px;
-                gap: 10px; /* 모바일에서 간격 조정 */
+                padding: 6px 10px;
+                gap: 4px; /* 모바일에서 간격 조정 */
+            }
+            .header-title-only h1 {
+                font-size: 1.25em;
+                margin: 4px 0;
             }
             .header-title-only {
                 width: 100%;
@@ -365,17 +473,24 @@
                 gap: 5px;
             }
             .intro-paragraph {
-                padding: 0 10px 15px 10px; /* 모바일 패딩 조정 */
-                margin-top: 10px; /* 모바일에서 고정 헤더 아래 여백 조정 */
+                padding: 0 10px 6px 10px; /* 모바일 패딩 조정 */
+                margin-top: 0;
+                margin-bottom: 4px;
+            }
+            .intro-paragraph p {
+                font-size: 0.82em;
+                line-height: 1.35;
+            }
+            .score-legend {
+                font-size: 0.8em;
             }
             .category-navigation {
-                padding: 10px;
-                gap: 5px;
+                padding: 5px 0 0;
+                gap: 4px;
             }
-            .category-button {
-                font-size: 0.8em;
-                padding: 6px 10px;
-            }
+            .current-category { font-size: 0.82em; }
+            .change-category-button { font-size: 0.8em; padding: 5px 10px; }
+            .random-button { font-size: 0.8em; padding: 5px 10px; }
             .container {
                 padding: 15px;
             }
@@ -407,21 +522,26 @@
                 margin-right: 0;
                 font-size: 0.9em; /* 좁은 화면에서 점수 글자 크기 조정 */
             }
-            /* 랜덤 입력 버튼은 데스크탑에서만 활성화 → 모바일에서는 숨김 */
-            .random-button {
-                display: none;
-            }
             .button-row .submit-button {
-                width: 100%; /* 모바일에서는 점수계산 버튼이 전체 너비 차지 */
+                width: 100%;
             }
             .results-display {
-                padding: 4px; /* 모바일 패딩 더 좁게 */
+                padding: 6px; /* 모바일 패딩 */
                 font-size: 0.85em; /* 모바일 폰트 크기 조정 */
-                line-height: 0.9; /* 모바일 줄간격 더 줄임 */
+                line-height: 1.3; /* 글자 겹침 방지 */
             }
             .results-table th, .results-table td {
-                padding: 2px; /* 모바일 테이블 패딩 줄임 */
-                line-height: 0.9; /* 모바일 테이블 셀 줄간격도 줄임 */
+                padding: 4px 3px;
+                line-height: 1.3;
+            }
+            /* 점수·판단 칸은 세로로 쪼개지지 않도록 */
+            .results-table th:nth-child(2), .results-table td:nth-child(2) {
+                white-space: nowrap;
+                width: 1%;
+            }
+            .results-display h3 {
+                margin: 10px 0 6px;
+                line-height: 1.3;
             }
             .results-title {
                 font-size: 1.2em; /* 모바일 타이틀 크기 조정 */
@@ -458,7 +578,31 @@
     </style>
 </head>
 <body>
-    <div class="main-sticky-header">
+    <div id="start-screen" class="start-screen">
+        <h1>회복탄력성 (KRQ-53) 측정 설문지</h1>
+        <p class="start-desc"><strong>응답할 설문을 선택해 주세요.</strong><br>전체 설문은 총 회복탄력성 점수와 세 영역의 결과를, 영역 하나를 고르면 그 영역의 결과만 확인합니다.</p>
+        <div class="start-options">
+            <button type="button" class="start-option start-option-all" data-category="all">
+                <span><span class="start-option-title">전체 설문</span><span class="start-option-count">53문항</span></span>
+                <span class="start-option-desc">자기조절능력 + 대인관계능력 + 긍정성. 총 회복탄력성 점수(한국인 평균 195점)와 최종 평가까지 확인합니다.</span>
+            </button>
+            <button type="button" class="start-option" data-category="self-regulation">
+                <span><span class="start-option-title">자기조절능력</span><span class="start-option-count">18문항</span></span>
+                <span class="start-option-desc">감정조절력 · 충동통제력 · 원인분석력</span>
+            </button>
+            <button type="button" class="start-option" data-category="interpersonal-skills">
+                <span><span class="start-option-title">대인관계능력</span><span class="start-option-count">18문항</span></span>
+                <span class="start-option-desc">소통능력 · 공감능력 · 자아확장력</span>
+            </button>
+            <button type="button" class="start-option" data-category="positivity">
+                <span><span class="start-option-title">긍정성</span><span class="start-option-count">17문항</span></span>
+                <span class="start-option-desc">자아낙관성 · 생활만족도 · 감사하기</span>
+            </button>
+        </div>
+        <p class="start-note">설문을 시작한 뒤에도 화면 상단의 '영역 변경' 버튼으로 이 화면에 돌아올 수 있습니다. (돌아오면 입력한 답은 초기화됩니다.)</p>
+    </div>
+
+    <div class="main-sticky-header is-hidden">
         <div class="header-title-only">
             <h1>회복탄력성 (KRQ-53) 측정 설문지</h1>
         </div>
@@ -476,19 +620,20 @@
                 <li><span class="option-value">5점:</span> 매우 그렇다</li>
             </ul>
         </div>
+
+        <div class="category-navigation" aria-label="현재 설문 영역">
+            <span class="current-category">선택 영역: <strong id="current-category-label">전체 설문(53문항)</strong></span>
+            <span class="header-buttons">
+                <button type="button" id="random-fill-button" class="random-button">랜덤 입력</button>
+                <button type="button" id="change-category-button" class="change-category-button">영역 변경</button>
+            </span>
+        </div>
     </div>    
 
-    <div class="category-navigation" aria-label="설문 영역 선택">
-        <button type="button" class="category-button active" data-category="all">전체 설문(53문항)</button>
-        <button type="button" class="category-button" data-category="self-regulation">자기조절능력(18문항)</button>
-        <button type="button" class="category-button" data-category="interpersonal-skills">대인관계능력(18문항)</button>
-        <button type="button" class="category-button" data-category="positivity">긍정성(17문항)</button>
-    </div>
-
-    <div class="container">
+    <div class="container is-hidden">
         <form id="krq-survey-form">
             <!-- 자기조절능력 (Self-regulation) -->
-            <h2 class="category-title" data-category="self-regulation"></h2>
+            <h2 class="category-title" data-category="self-regulation">자기조절능력</h2>
             <div class="question-section" data-category="self-regulation">
                 <div class="question-title">1. 나는 어려운 일이 닥쳤을 때 감정을 통제할 수 있다.</div>
                 <div class="options-group">
@@ -869,7 +1014,7 @@
 
 
             <!-- 대인관계능력 (Interpersonal skills) -->
-            <h2 class="category-title" data-category="interpersonal-skills"></h2>
+            <h2 class="category-title" data-category="interpersonal-skills">대인관계능력</h2>
 
             <div class="question-section" data-category="interpersonal-skills">
                 <div class="question-title">19. 나는 분위기나 대화 상대에 따라 대화를 잘 이끌어 갈 수 있다.</div>
@@ -1250,7 +1395,7 @@
             </div>
 
             <!-- 긍정성 (Positivity) -->
-            <h2 class="category-title" data-category="positivity"></h2>
+            <h2 class="category-title" data-category="positivity">긍정성</h2>
 
             <div class="question-section" data-category="positivity">
                 <div class="question-title">37. 열심히 일하면 언제나 보답이 있으리라고 생각한다.</div>
@@ -1610,7 +1755,6 @@
             </div>
 
             <div class="button-row">
-                <button type="button" id="random-fill-button" class="random-button">랜덤 입력</button>
                 <button type="submit" class="submit-button">점수계산</button>
             </div>
         </form>
@@ -1644,7 +1788,6 @@
             });
 
             // 카테고리 필터링 로직
-            const categoryButtons = document.querySelectorAll('.category-button');
             const questionSections = document.querySelectorAll('.question-section');
             const categoryTitles = document.querySelectorAll('.category-title'); // 카테고리 제목도 선택
 
@@ -1702,52 +1845,48 @@
                 renumberVisibleQuestions();
             }
 
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const clickedCategory = this.dataset.category;
+            // 페이지 로드 시 초기 가시성 설정
+            updateQuestionVisibility();
 
-                    if (clickedCategory === 'all') {
-                        // '전체 설문조사' 버튼 클릭 시
-                        activeCategories.clear();
-                        activeCategories.add('all');
-                        categoryButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                    } else {
-                        // 다른 카테고리 버튼 클릭 시
-                        if (activeCategories.has('all')) {
-                            activeCategories.clear(); // 'all' 상태 해제
-                            document.querySelector('.category-button[data-category="all"]').classList.remove('active');
-                        }
-
-                        if (activeCategories.has(clickedCategory)) {
-                            activeCategories.delete(clickedCategory);
-                            this.classList.remove('active');
-                        } else {
-                            activeCategories.add(clickedCategory);
-                            this.classList.add('active');
-                        }
-
-                        // 아무것도 선택되지 않으면 'all'을 기본으로 활성화
-                        if (activeCategories.size === 0) {
-                            activeCategories.add('all');
-                            document.querySelector('.category-button[data-category="all"]').classList.add('active');
-                        }
-                    }
+            // ===== 시작 화면: 영역을 고르면 설문 화면으로 전환 =====
+            const startScreen = document.getElementById('start-screen');
+            const stickyHeader = document.querySelector('.main-sticky-header');
+            const surveyContainer = document.querySelector('.container');
+            document.querySelectorAll('.start-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const chosen = this.dataset.category;
+                    activeCategories.clear();
+                    activeCategories.add(chosen);
+                    const label = this.querySelector('.start-option-title').textContent + '(' + this.querySelector('.start-option-count').textContent + ')';
+                    document.getElementById('current-category-label').textContent = label;
                     updateQuestionVisibility();
+                    startScreen.classList.add('is-hidden');
+                    stickyHeader.classList.remove('is-hidden');
+                    surveyContainer.classList.remove('is-hidden');
+                    window.scrollTo({ top: 0 });
                 });
             });
 
-            // 페이지 로드 시 초기 가시성 설정
-            updateQuestionVisibility();
+            // "영역 변경": 설문 화면을 닫고 시작 화면으로 (답변·결과 초기화)
+            document.getElementById('change-category-button').addEventListener('click', function() {
+                const form = document.getElementById('krq-survey-form');
+                form.reset();
+                form.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.dispatchEvent(new Event('change', { bubbles: true })); // 섹션 색상 초기화
+                });
+                const results = document.getElementById('survey-results');
+                results.innerHTML = '';
+                results.style.display = 'none';
+                stickyHeader.classList.add('is-hidden');
+                surveyContainer.classList.add('is-hidden');
+                startScreen.classList.remove('is-hidden');
+                window.scrollTo({ top: 0 });
+            });
 
             // "랜덤 입력" 버튼: 53개 전체 문항에 1~5점을 랜덤으로 입력 (데스크탑 전용)
             const randomFillButton = document.getElementById('random-fill-button');
             if (randomFillButton) {
                 randomFillButton.addEventListener('click', function() {
-                    // 모바일에서는 버튼이 숨겨져 있지만, 안전장치로 한 번 더 차단
-                    if (window.matchMedia('(max-width: 600px)').matches) {
-                        return;
-                    }
                     const form = document.getElementById('krq-survey-form');
                     // 모든 라디오 그룹 이름(q1~q53)을 수집
                     const groupNames = new Set();
@@ -1755,18 +1894,29 @@
                         if (!isSectionActive(section)) return;
                         section.querySelectorAll('input[type="radio"]').forEach(radio => groupNames.add(radio.name));
                     });
-                    // 각 문항에 1~5 사이의 랜덤 점수 부여
-                    // (균등 분포는 기대 총점이 약 159점으로 항상 '나약파'가 나오므로,
-                    //  한국인 평균(195점, 문항당 약 3.7점)에 가까운 가중 분포를 사용)
+                    // 가상의 응답자 한 명을 만들어 일관된 답을 생성
+                    //  - 전체 성향(한국인 평균 195점 ≈ 문항당 3.7점 근처)
+                    //  - 하위 요인(9개)별 성향 = 전체 성향 + 작은 편차
+                    //  - 문항별 답 = 하위 요인 성향 + 아주 작은 편차 → 같은 요인의 문항은 비슷한 답
+                    //  - 역채점 문항은 6-점수로 바꿔 입력하므로 반대 방향으로 답이 찍힘
                     const reverseSet = new Set([4,5,6,10,11,12,16,17,18,22,23,24,28,29,30,34,35,36,40,41,42,51,52,53].map(n => `q${n}`));
-                    const weights = [0.05, 0.10, 0.25, 0.35, 0.25]; // 1~5점(채점 기준) 확률
-                    const pickWeighted = () => {
-                        let r = Math.random(), acc = 0;
-                        for (let k = 0; k < weights.length; k++) { acc += weights[k]; if (r < acc) return k + 1; }
-                        return 5;
+                    const subFactorRanges = [[1,6],[7,12],[13,18],[19,24],[25,30],[31,36],[37,42],[43,47],[48,53]];
+                    const randNormal = () => { // 표준정규 난수 (Box-Muller)
+                        let u = 0, v = 0;
+                        while (u === 0) u = Math.random();
+                        while (v === 0) v = Math.random();
+                        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+                    };
+                    const overallTrait = 3.7 + 0.45 * randNormal();           // 응답자 전체 성향
+                    const subFactorTrait = subFactorRanges.map(() => overallTrait + 0.35 * randNormal()); // 요인별 성향
+                    const traitOf = (qNum) => {
+                        const idx = subFactorRanges.findIndex(([a, b]) => qNum >= a && qNum <= b);
+                        return idx >= 0 ? subFactorTrait[idx] : overallTrait;
                     };
                     groupNames.forEach(name => {
-                        let value = pickWeighted();
+                        const qNum = parseInt(name.slice(1), 10);
+                        let value = Math.round(traitOf(qNum) + 0.45 * randNormal()); // 문항별 작은 편차
+                        value = Math.max(1, Math.min(5, value));
                         if (reverseSet.has(name)) value = 6 - value; // 역채점 문항은 원점수로 환산
                         const target = form.querySelector(
                             'input[name="' + name + '"][value="' + value + '"]'
@@ -2136,7 +2286,10 @@
                 resultsDisplay.style.display = 'block'; // 결과를 표시
 
                 // 결과가 보이는 곳으로 스크롤
-                resultsDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // 고정 헤더 높이만큼 보정해 결과 제목이 헤더에 가려지지 않도록 스크롤
+                const headerHeight = document.querySelector('.main-sticky-header')?.getBoundingClientRect().height || 0;
+                const targetTop = resultsDisplay.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+                window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
             });
         </script>
     </div>
