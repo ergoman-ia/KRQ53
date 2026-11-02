@@ -458,6 +458,20 @@
             margin-top: 3px;
             margin-bottom: 3px;
         }
+        /* 총 회복탄력성 결과 영역: 개별 항목(옅은 파란색)과 구분되는 바탕색 */
+        .total-section {
+            margin-top: 12px;
+            padding: 8px;
+            background-color: #fff8e1; /* 옅은 노란색 */
+            border: 1px solid #ffd54f;
+            border-radius: 6px;
+        }
+        .total-section .results-table th {
+            background-color: #ffecb3;
+        }
+        .total-section .results-table tr:nth-child(even) {
+            background-color: #fffdf5;
+        }
         .evaluation-result {
             margin-top: 8px; /* 마진을 줄임 */
             padding-top: 4px; /* 패딩을 줄임 */
@@ -2291,7 +2305,7 @@
                     </table>`;
 
                 const totalBlock = `
-                    <hr style="border: 0; height: 1px; background-color: #ccc; margin: 5px 0;"> <!-- 구분선 마진도 줄임 -->
+                    <div class="total-section">
 
                     <h2 class="total-resilience-summary-title">총 회복탄력성 점수 : <strong>${displayTotalResilienceScore}</strong></h2>
                     <table class="results-table">
@@ -2325,6 +2339,7 @@
                     <div class="evaluation-result">
                         <h3>최종 평가결과 : ${resilienceCategory}</h3>
                         <p>${totalResilienceInterpretation || '답변된 문항이 없어 총 회복탄력성을 평가할 수 없습니다.'}</p>
+                    </div>
                     </div>`;
 
                 const selectedNames = [
