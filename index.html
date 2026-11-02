@@ -93,6 +93,14 @@
             word-break: keep-all;
         }
         .start-option.start-option-all { border-color: #007bff; background-color: #e7f1ff; }
+        /* 전체 설문을 제외한 3개 영역 카드: 80% 크기, 가운데 정렬 */
+        .start-option:not(.start-option-all) {
+            width: 80%;
+            margin: 0 auto;
+            padding: 14px 14px;
+            align-items: center;
+            text-align: center;
+        }
         .start-note {
             margin-top: 16px;
             font-size: 1em;
