@@ -36,18 +36,22 @@
             text-align: center;
         }
         .start-screen h1 {
-            font-size: 1.5em;
+            font-size: 1.9em;
             margin: 0 0 8px;
             word-break: keep-all; /* 단어 중간에서 끊기지 않도록 */
         }
         @media (max-width: 600px) {
             .start-screen { padding: 18px 12px 28px; }
-            .start-screen h1 { font-size: 1.25em; }
-            .start-screen .start-desc { font-size: 0.9em; word-break: keep-all; }
+            .start-screen h1 { font-size: 1.5em; }
+            .start-screen .start-desc { font-size: 1.05em; word-break: keep-all; }
+            .start-option .start-option-title { font-size: 1.3em; }
+            .start-option .start-option-count { font-size: 1em; }
+            .start-option .start-option-desc { font-size: 1em; }
+            .start-note { font-size: 0.95em; }
         }
         .start-screen .start-desc {
             color: #666;
-            font-size: 0.95em;
+            font-size: 1.15em;
             line-height: 1.5;
             margin: 0 0 20px;
         }
@@ -61,7 +65,7 @@
             flex-direction: column;
             align-items: flex-start;
             text-align: left;
-            padding: 14px 16px;
+            padding: 18px 18px;
             border: 2px solid #ccc;
             border-radius: 10px;
             background-color: #f8f9fa;
@@ -71,26 +75,27 @@
         }
         .start-option:hover { border-color: #007bff; background-color: #eef5ff; }
         .start-option .start-option-title {
-            font-size: 1.1em;
+            font-size: 1.45em;
             font-weight: bold;
             color: #0056b3;
         }
         .start-option .start-option-count {
-            font-size: 0.85em;
+            font-size: 1.05em;
             color: #fd7e14;
             font-weight: bold;
             margin-left: 6px;
         }
         .start-option .start-option-desc {
-            font-size: 0.88em;
+            font-size: 1.08em;
             color: #555;
-            line-height: 1.4;
-            margin-top: 4px;
+            line-height: 1.45;
+            margin-top: 6px;
+            word-break: keep-all;
         }
         .start-option.start-option-all { border-color: #007bff; background-color: #e7f1ff; }
         .start-note {
             margin-top: 16px;
-            font-size: 0.82em;
+            font-size: 1em;
             color: #888;
             line-height: 1.4;
         }
@@ -162,14 +167,24 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            display: flex; /* 리스트 아이템을 한 줄에 배치 */
-            flex-wrap: wrap; /* 공간 부족 시 줄 바꿈 허용 */
-            gap: 8px; /* 아이템 간 간격 */
-            justify-content: center; /* 아이템을 가운데 정렬 */
+            display: grid; /* 문항 보기(1~5점)와 같은 5칸 */
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            border-top: 1px dashed #ddd;
+            padding-top: 6px;
         }
         .score-legend li {
             margin-bottom: 0;
-            white-space: nowrap; /* 개별 척도 항목이 줄 바꿈되지 않도록 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            line-height: 1.25;
+            word-break: keep-all;
+        }
+        .score-legend .legend-text {
+            font-size: 0.9em;
+            color: #444;
         }
         .category-navigation {
             width: 100%;
@@ -181,7 +196,8 @@
             margin-top: 0;
             padding: 6px 0 0;
             background-color: transparent;
-            border-top: 1px solid #eee;
+            border-top: none; /* 안내문 하단 선과 겹치지 않도록 */
+            padding-bottom: 4px;
             box-sizing: border-box;
         }
         .category-button,
@@ -469,8 +485,10 @@
                 text-align: center; /* 모바일 척도 중앙 정렬 */
             }
             .score-legend ul {
-                justify-content: center; /* 모바일 척도 항목 중앙 정렬 */
-                gap: 5px;
+                gap: 4px;
+            }
+            .score-legend .legend-text {
+                font-size: 0.82em;
             }
             .intro-paragraph {
                 padding: 0 10px 6px 10px; /* 모바일 패딩 조정 */
@@ -611,16 +629,6 @@
         <p>본 설문지는 귀하의 경험과 생각을 파악하기 위한 것입니다. <br>각 문항을 읽고 귀하에게 가장 적합하다고 생각하는 보기를 선택해 주십시오.</p>
         </div>
 
-        <div class="score-legend">
-            <ul>
-                <li><span class="option-value">1점:</span> 전혀 그렇지 않다</li>
-                <li><span class="option-value">2점:</span> 그렇지 않다</li>
-                <li><span class="option-value">3점:</span> 보통이다</li>
-                <li><span class="option-value">4점:</span> 그렇다</li>
-                <li><span class="option-value">5점:</span> 매우 그렇다</li>
-            </ul>
-        </div>
-
         <div class="category-navigation" aria-label="현재 설문 영역">
             <span class="current-category">선택 영역: <strong id="current-category-label">전체 설문(53문항)</strong></span>
             <span class="header-buttons">
@@ -628,6 +636,17 @@
                 <button type="button" id="change-category-button" class="change-category-button">영역 변경</button>
             </span>
         </div>
+
+        <div class="score-legend" id="score-legend">
+            <ul>
+                <li><span class="option-value">1점</span><span class="legend-text">전혀 그렇지 않다</span></li>
+                <li><span class="option-value">2점</span><span class="legend-text">그렇지 않다</span></li>
+                <li><span class="option-value">3점</span><span class="legend-text">보통이다</span></li>
+                <li><span class="option-value">4점</span><span class="legend-text">그렇다</span></li>
+                <li><span class="option-value">5점</span><span class="legend-text">매우 그렇다</span></li>
+            </ul>
+        </div>
+
     </div>    
 
     <div class="container is-hidden">
@@ -1848,6 +1867,26 @@
             // 페이지 로드 시 초기 가시성 설정
             updateQuestionVisibility();
 
+            // 헤더의 척도 5칸을 문항 보기(1~5점) 5칸과 가로 위치가 같도록 맞춤
+            function alignLegendToOptions() {
+                const legend = document.getElementById('score-legend');
+                const visibleSection = Array.from(questionSections).find(sec => sec.style.display !== 'none');
+                if (!legend || !visibleSection) return;
+                const options = visibleSection.querySelector('.options-group');
+                if (!options) return;
+                legend.style.width = '100%';
+                legend.style.boxSizing = 'border-box';
+                legend.style.padding = '0';                 // 먼저 여백을 없애고 실제 위치를 잰 뒤 계산
+                const ul = legend.querySelector('ul');
+                ul.style.columnGap = getComputedStyle(options).columnGap; // 보기 칸과 같은 간격
+                const legendRect = legend.getBoundingClientRect();
+                const optRect = options.getBoundingClientRect();
+                const left = Math.max(0, optRect.left - legendRect.left);
+                const right = Math.max(0, legendRect.right - optRect.right);
+                legend.style.padding = `0 ${right}px 0 ${left}px`;
+            }
+            window.addEventListener('resize', alignLegendToOptions);
+
             // ===== 시작 화면: 영역을 고르면 설문 화면으로 전환 =====
             const startScreen = document.getElementById('start-screen');
             const stickyHeader = document.querySelector('.main-sticky-header');
@@ -1864,6 +1903,7 @@
                     stickyHeader.classList.remove('is-hidden');
                     surveyContainer.classList.remove('is-hidden');
                     window.scrollTo({ top: 0 });
+                    alignLegendToOptions();
                 });
             });
 
@@ -1871,8 +1911,8 @@
             document.getElementById('change-category-button').addEventListener('click', function() {
                 const form = document.getElementById('krq-survey-form');
                 form.reset();
-                form.querySelectorAll('input[type="radio"]').forEach(radio => {
-                    radio.dispatchEvent(new Event('change', { bubbles: true })); // 섹션 색상 초기화
+                form.querySelectorAll('.question-section').forEach(section => {
+                    section.classList.remove('self-regulation-selected', 'interpersonal-skills-selected', 'positivity-selected');
                 });
                 const results = document.getElementById('survey-results');
                 results.innerHTML = '';
