@@ -417,6 +417,11 @@
             margin-bottom: 1px; /* 마진을 더 줄임 */
             line-height: 1.0; /* 줄간격을 더 줄임 */
         }
+        .results-table th:nth-child(2), .results-table td:nth-child(2) {
+            white-space: nowrap; /* "12 / 30점"이 한 줄로 보이도록 */
+            min-width: 5.5em;
+            text-align: center;
+        }
         .results-table {
             width: 100%;
             border-collapse: collapse;
@@ -2093,21 +2098,21 @@
 
 
                 // Determine display values for sub-categories
-                const displayEmotionalControlScore = subCategories.emotionalControl.count > 0 ? `${subCategories.emotionalControl.score}점` : 'N/A';
-                const displayImpulseControlScore = subCategories.impulseControl.count > 0 ? `${subCategories.impulseControl.score}점` : 'N/A';
-                const displayCauseAnalysisScore = subCategories.causeAnalysis.count > 0 ? `${subCategories.causeAnalysis.score}점` : 'N/A';
-                const displayCommunicationScore = subCategories.communication.count > 0 ? `${subCategories.communication.score}점` : 'N/A';
-                const displayEmpathyScore = subCategories.empathy.count > 0 ? `${subCategories.empathy.score}점` : 'N/A';
-                const displaySelfExpansionScore = subCategories.selfExpansion.count > 0 ? `${subCategories.selfExpansion.score}점` : 'N/A';
-                const displaySelfOptimismScore = subCategories.selfOptimism.count > 0 ? `${subCategories.selfOptimism.score}점` : 'N/A';
-                const displayLifeSatisfactionScore = subCategories.lifeSatisfaction.count > 0 ? `${subCategories.lifeSatisfaction.score}점` : 'N/A';
-                const displayGratitudeScore = subCategories.gratitude.count > 0 ? `${subCategories.gratitude.score}점` : 'N/A';
+                const displayEmotionalControlScore = subCategories.emotionalControl.count > 0 ? `${subCategories.emotionalControl.score} / ${(subCategories.emotionalControl.end - subCategories.emotionalControl.start + 1) * 5}` : 'N/A';
+                const displayImpulseControlScore = subCategories.impulseControl.count > 0 ? `${subCategories.impulseControl.score} / ${(subCategories.impulseControl.end - subCategories.impulseControl.start + 1) * 5}` : 'N/A';
+                const displayCauseAnalysisScore = subCategories.causeAnalysis.count > 0 ? `${subCategories.causeAnalysis.score} / ${(subCategories.causeAnalysis.end - subCategories.causeAnalysis.start + 1) * 5}` : 'N/A';
+                const displayCommunicationScore = subCategories.communication.count > 0 ? `${subCategories.communication.score} / ${(subCategories.communication.end - subCategories.communication.start + 1) * 5}` : 'N/A';
+                const displayEmpathyScore = subCategories.empathy.count > 0 ? `${subCategories.empathy.score} / ${(subCategories.empathy.end - subCategories.empathy.start + 1) * 5}` : 'N/A';
+                const displaySelfExpansionScore = subCategories.selfExpansion.count > 0 ? `${subCategories.selfExpansion.score} / ${(subCategories.selfExpansion.end - subCategories.selfExpansion.start + 1) * 5}` : 'N/A';
+                const displaySelfOptimismScore = subCategories.selfOptimism.count > 0 ? `${subCategories.selfOptimism.score} / ${(subCategories.selfOptimism.end - subCategories.selfOptimism.start + 1) * 5}` : 'N/A';
+                const displayLifeSatisfactionScore = subCategories.lifeSatisfaction.count > 0 ? `${subCategories.lifeSatisfaction.score} / ${(subCategories.lifeSatisfaction.end - subCategories.lifeSatisfaction.start + 1) * 5}` : 'N/A';
+                const displayGratitudeScore = subCategories.gratitude.count > 0 ? `${subCategories.gratitude.score} / ${(subCategories.gratitude.end - subCategories.gratitude.start + 1) * 5}` : 'N/A';
 
                 // Determine display values for main categories and total
-                const displaySelfRegulationScore = selfRegulationAnsweredCount > 0 ? `${selfRegulationScore}점` : 'N/A (답변된 문항 없음)';
-                const displayInterpersonalSkillsScore = interpersonalSkillsAnsweredCount > 0 ? `${interpersonalSkillsScore}점` : 'N/A (답변된 문항 없음)';
-                const displayPositivityScore = positivityAnsweredCount > 0 ? `${positivityScore}점` : 'N/A (답변된 문항 없음)';
-                const displayTotalResilienceScore = totalAnsweredCount > 0 ? `${totalResilienceScore}점` : 'N/A (답변된 문항 없음)';
+                const displaySelfRegulationScore = selfRegulationAnsweredCount > 0 ? `${selfRegulationScore} / 90` : 'N/A (답변된 문항 없음)';
+                const displayInterpersonalSkillsScore = interpersonalSkillsAnsweredCount > 0 ? `${interpersonalSkillsScore} / 90` : 'N/A (답변된 문항 없음)';
+                const displayPositivityScore = positivityAnsweredCount > 0 ? `${positivityScore} / 85` : 'N/A (답변된 문항 없음)';
+                const displayTotalResilienceScore = totalAnsweredCount > 0 ? `${totalResilienceScore} / 265` : 'N/A (답변된 문항 없음)';
 
 
                 // 자기조절능력 점수 해석
